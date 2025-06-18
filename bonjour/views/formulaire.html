@@ -1,0 +1,53 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire</title>
+</head>
+<body>
+  <h2>Formulaire de message</h2>
+  <form action="/api/messages" method="POST">
+    <label>Nom:</label>
+    <input type="text" name="nom" required><br><br>
+
+    <label>Message:</label>
+    <textarea name="message" required></textarea><br><br>
+
+    <label>Date d'ajout:</label>
+    <input type="date" name="date_ajout" required><br><br>
+
+    <button type="submit">Envoyer</button>
+  </form>
+</body>
+</html>
+const express=require("express")
+const mysql = require('mysql')
+const app=express()
+var connection = mysql.createConnection({//creation de la connection
+    host: 'localhost',
+    user     : 'root',
+    password : '',
+    database: 'statut'
+  });
+ 
+
+ connection.connect();//se connecter a la bdd 
+
+  app.get('/statut',function(req,res){
+    connection.query("SELECT * from statut where id=?",[2],function(errors,results,fields){
+    res.send(results)//format json
+});
+  });
+
+
+
+//executer la commande node server.js
+  app.listen(3000,function(){
+    console.log("listening on port 3010") 
+});
+
+
+
+
+//npm i express -hbs (handle bars)
